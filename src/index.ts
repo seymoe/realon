@@ -1,6 +1,6 @@
 import Application from './engine/Application'
 
-class Game extends Application {
+class PlayGround extends Application {
     protected context: CanvasRenderingContext2D | null
 
     constructor(canvas: HTMLCanvasElement) {
@@ -9,7 +9,7 @@ class Game extends Application {
     }
 
     protected render(): void {
-        this.drawText('' + this._appId)
+        this.drawText('fps ' + this._fps)
     }
 
     protected drawText(text: string): void {
@@ -39,15 +39,15 @@ const init = function (): void {
     // 调用
     let canvas: HTMLCanvasElement | null = document.getElementById(
         "canvas"
-    ) as HTMLCanvasElement;
+    ) as HTMLCanvasElement
 
     let startBtn: HTMLButtonElement | null = document.getElementById('btnStart') as HTMLButtonElement
     let stopBtn: HTMLButtonElement | null = document.getElementById('btnStop') as HTMLButtonElement
 
-    let playground: Game | null
+    let playground: PlayGround | null
 
     if (canvas !== null) {
-        playground = new Game(canvas);
+        playground = new PlayGround(canvas)
     }
 
     startBtn.onclick = function (): void {
