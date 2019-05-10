@@ -1,7 +1,6 @@
 class Application {
   protected _start: boolean = false;
   protected _appId: number = -1;
-
   protected _lastTime!: number;
   protected _startTime!: number;
 
@@ -14,7 +13,6 @@ class Application {
       this._appId = -1;
       this._lastTime = -1;
       this._startTime = -1;
-      console.log(this);
       this._appId = requestAnimationFrame(this.step.bind(this));
     }
   }
@@ -24,7 +22,6 @@ class Application {
    */
   public stop() {
     if (this._start) {
-      console.log("appid", this._appId);
       cancelAnimationFrame(this._appId);
       this._appId = -1;
       this._lastTime = -1;
@@ -53,8 +50,8 @@ class Application {
     // 更新上一次的时间点
     this._lastTime = timeStamp;
 
-    console.log(`[count] timeStamp = ${timeStamp}`);
-    console.log(`[count] intervalSec = ${intervalSec}`);
+    // console.log(`[count] timeStamp = ${timeStamp}`);
+    // console.log(`[count] intervalSec = ${intervalSec}`);
 
     // 更新
     this.update(elapsedMsec, intervalSec);
@@ -68,22 +65,29 @@ class Application {
     );
   }
 
-  public update(elapsedMsec: number, intervalSec: number): void {
+  protected update(elapsedMsec: number, intervalSec: number): void {
     console.log("已经运行", elapsedMsec, "ms");
   }
 
-  public render(): void {}
+  protected render(): void { }
 }
 
-class Canvas2DUtil {
-  context: CanvasRenderingContext2D | null;
+class PlayGround extends Application {
+  protected context: CanvasRenderingContext2D | null;
+
   constructor(canvas: HTMLCanvasElement) {
+    super()
     this.context = canvas.getContext("2d");
   }
 
-  drawText(text: string): void {
+  protected render(): void {
+    this.drawText('' + this._appId)
+  }
+
+  protected drawText(text: string): void {
     if (this.context !== null) {
       let c = this.context;
+      c.clearRect(0, 0, c.canvas.width, c.canvas.height)
       c.save();
 
       c.textBaseline = "middle";
@@ -92,9 +96,10 @@ class Canvas2DUtil {
       let centerX: number = c.canvas.width * 0.5;
       let centerY: number = c.canvas.height * 0.5;
 
-      c.font = "normal 80px Arial";
-      c.fillStyle = "#000000";
-      c.strokeStyle = "red";
+      c.font = "normal 100px Arial";
+      c.fillStyle = "pink";
+      c.strokeStyle = "yellow";
+      c.fillText(text, centerX, centerY);
       c.strokeText(text, centerX, centerY);
 
       c.restore();
@@ -102,15 +107,31 @@ class Canvas2DUtil {
   }
 }
 
-// 调用
-let canvas: HTMLCanvasElement | null = document.getElementById(
-  "canvas"
-) as HTMLCanvasElement;
+const init = function (): void {
+  // 调用
+  let canvas: HTMLCanvasElement | null = document.getElementById(
+    "canvas"
+  ) as HTMLCanvasElement;
 
-if (canvas !== null) {
-  let canvas2d: Canvas2DUtil = new Canvas2DUtil(canvas);
-  canvas2d.drawText("Hello World!");
+  let startBtn: HTMLButtonElement | null = document.getElementById('btnStart') as HTMLButtonElement
+  let stopBtn: HTMLButtonElement | null = document.getElementById('btnStop') as HTMLButtonElement
+
+  let playground: PlayGround | null
+
+  if (canvas !== null) {
+    playground = new PlayGround(canvas);
+  }
+
+  startBtn.onclick = function (): void {
+    if (playground !== null) {
+      playground.start()
+    }
+  }
+  stopBtn.onclick = function (): void {
+    if (playground !== null) {
+      playground.stop()
+    }
+  }
 }
 
-let app: Application = new Application();
-app.start();
+init()

@@ -1,4 +1,17 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Application = /** @class */ (function () {
     function Application() {
         this._start = false;
@@ -13,7 +26,6 @@ var Application = /** @class */ (function () {
             this._appId = -1;
             this._lastTime = -1;
             this._startTime = -1;
-            console.log(this);
             this._appId = requestAnimationFrame(this.step.bind(this));
         }
     };
@@ -22,7 +34,6 @@ var Application = /** @class */ (function () {
      */
     Application.prototype.stop = function () {
         if (this._start) {
-            console.log("appid", this._appId);
             cancelAnimationFrame(this._appId);
             this._appId = -1;
             this._lastTime = -1;
@@ -51,8 +62,8 @@ var Application = /** @class */ (function () {
         var intervalSec = timeStamp - this._lastTime;
         // 更新上一次的时间点
         this._lastTime = timeStamp;
-        console.log("[count] timeStamp = " + timeStamp);
-        console.log("[count] intervalSec = " + intervalSec);
+        // console.log(`[count] timeStamp = ${timeStamp}`);
+        // console.log(`[count] intervalSec = ${intervalSec}`);
         // 更新
         this.update(elapsedMsec, intervalSec);
         // 渲染
@@ -67,33 +78,54 @@ var Application = /** @class */ (function () {
     Application.prototype.render = function () { };
     return Application;
 }());
-var Canvas2DUtil = /** @class */ (function () {
-    function Canvas2DUtil(canvas) {
-        this.context = canvas.getContext("2d");
+var PlayGround = /** @class */ (function (_super) {
+    __extends(PlayGround, _super);
+    function PlayGround(canvas) {
+        var _this = _super.call(this) || this;
+        _this.context = canvas.getContext("2d");
+        return _this;
     }
-    Canvas2DUtil.prototype.drawText = function (text) {
+    PlayGround.prototype.render = function () {
+        this.drawText('' + this._appId);
+    };
+    PlayGround.prototype.drawText = function (text) {
         if (this.context !== null) {
             var c = this.context;
+            c.clearRect(0, 0, c.canvas.width, c.canvas.height);
             c.save();
             c.textBaseline = "middle";
             c.textAlign = "center";
             // 计算cnavas中心坐标
             var centerX = c.canvas.width * 0.5;
             var centerY = c.canvas.height * 0.5;
-            c.font = "normal 80px Arial";
-            c.fillStyle = "#000000";
-            c.strokeStyle = "red";
+            c.font = "normal 100px Arial";
+            c.fillStyle = "pink";
+            c.strokeStyle = "yellow";
+            c.fillText(text, centerX, centerY);
             c.strokeText(text, centerX, centerY);
             c.restore();
         }
     };
-    return Canvas2DUtil;
-}());
-// 调用
-var canvas = document.getElementById("canvas");
-if (canvas !== null) {
-    var canvas2d = new Canvas2DUtil(canvas);
-    canvas2d.drawText("Hello World!");
-}
-var app = new Application();
-app.start();
+    return PlayGround;
+}(Application));
+var init = function () {
+    // 调用
+    var canvas = document.getElementById("canvas");
+    var startBtn = document.getElementById('btnStart');
+    var stopBtn = document.getElementById('btnStop');
+    var playground;
+    if (canvas !== null) {
+        playground = new PlayGround(canvas);
+    }
+    startBtn.onclick = function () {
+        if (playground !== null) {
+            playground.start();
+        }
+    };
+    stopBtn.onclick = function () {
+        if (playground !== null) {
+            playground.stop();
+        }
+    };
+};
+init();
