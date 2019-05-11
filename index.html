@@ -13,10 +13,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #000;
       }
       .playground {
-        margin-top: 50px;
-        background-color: #f8f8f8;
+        margin-top: 100px;
+        background-color: #ffff;
       }
       #canvas {
         width: 800px;
@@ -27,9 +28,9 @@
   <body>
     <div class="playground">
       <canvas id="canvas" width="1600" height="800"></canvas>
-      <button id="btnStart">开始</button>
-      <button id="btnStop">停止</button>
-      <script src="./dist/app.bundle.js"></script>
     </div>
+    <button id="btnStart">开始</button>
+    <button id="btnStop">停止</button>
+    <script src="./dist/app.bundle.js"></script>
   </body>
 </html>
