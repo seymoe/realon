@@ -1,5 +1,5 @@
 import { Canvas2DApplication } from './engine/Application'
-import { CanvasMouseEvent, CanvasKeyBoardEvent } from './engine/event';
+import { CanvasMouseEvent, CanvasKeyBoardEvent } from './engine/shared/event'
 
 class PlayGround extends Canvas2DApplication {
   constructor(canvas: HTMLCanvasElement) {

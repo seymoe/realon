@@ -1,4 +1,4 @@
-import { vec2 } from './shared/vec2'
+import { vec2 } from './vec2'
 /**
  * 对输入事件的分发和响应机制
  */

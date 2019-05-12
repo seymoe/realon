@@ -1,6 +1,6 @@
 import { vec2 } from './shared/vec2'
 import { Timer, TimerCallback } from './shared/timer'
-import { CanvasMouseEvent, CanvasKeyBoardEvent } from './event'
+import { CanvasMouseEvent, CanvasKeyBoardEvent } from './shared/event'
 
 // 事件分发接口
 interface EventListenerObject {
@@ -137,6 +137,8 @@ export class Application implements EventListenerObject {
         break
       case 'keyUp':
         this.dispatchKeyUp(this._toCanvasKeyBoardEvent(evt))
+        break
+      default:
         break
     }
   }
@@ -347,9 +349,9 @@ export class Application implements EventListenerObject {
 export class Canvas2DApplication extends Application {
   protected context2D: CanvasRenderingContext2D | null
 
-  constructor(canvas: HTMLCanvasElement, contextAttributes?: CanvasRenderingContext2DSettings) {
+  constructor(canvas: HTMLCanvasElement) {
     super(canvas)
-    this.context2D = this.canvas.getContext("2d", contextAttributes)
+    this.context2D = this.canvas.getContext('2d')
   }
 }
 
@@ -358,13 +360,13 @@ export class WebGLApplication extends Application {
 
   constructor(canvas: HTMLCanvasElement, contextAttributes?: WebGLContextAttributes) {
     super(canvas)
-    this.context3D = this.canvas.getContext("webgl", contextAttributes)
+    this.context3D = this.canvas.getContext('webgl', contextAttributes)
 
     // 检查webGL兼容性
     if (this.context3D === null) {
       this.context3D = this.canvas.getContext('experimental-webgl', contextAttributes)
       if (this.context3D === null) {
-        throw Error("无法创建WebGLRenderingContext上下文对象")
+        throw Error('无法创建WebGLRenderingContext上下文对象')
       }
     }
   }

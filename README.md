@@ -1,14 +1,30 @@
-# TypeScript-Babel-Starter
+# Canvas-2D
 
 # What is this?
 
-This is a small sample repository that uses Babel to transform TypeScript to plain JavaScript, and uses TypeScript for type-checking.
-This README will also explain step-by-step how you can set up this repository so you can understand how each component fits together.
-
-For simplicity, we've used `babel-cli` with a bare-bones TypeScript setup, but we'll also demonstrate integration with JSX/React, as well as adding bundlers into the mix.
-Specifically, we'll show off integration with Webpack for if you're deploying an application, and Rollup for if you're producing a library.
+This is a small sample repository that uses TypeScript to build a Canvas 2D render application.
 
 # How do I use it?
+
+In order to be able to run in browser, we can use webpack to do it, so you can follow the steps bellow.
+
+## fork or clone
+
+```sh
+git clone https://github.com/seymoe/canvas2d-ts.git
+```
+
+## Run and Preview
+
+```sh
+npm run bundle
+```
+
+open the `index.html` with your browser.
+
+---
+
+**Because I used [https://github.com/microsoft/TypeScript-Babel-Starter](https://github.com/microsoft/TypeScript-Babel-Starter) repo as template, you also can see some steps about this repo bellow.**
 
 ## Building the repo
 
