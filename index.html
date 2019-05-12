@@ -11,26 +11,39 @@
       }
       body {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        background-color: #000;
+        background-color: #f3f3f3;
       }
       .playground {
-        margin-top: 100px;
         background-color: #ffff;
+        width: 800px;
+        height: 600px;
       }
       #canvas {
         width: 800px;
-        height: 400px;
+        height: 600px;
+      }
+      .btns{
+        margin-left: 15px;
+      }
+      button{
+        margin-bottom: 10px;
+        display: block;
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
       }
     </style>
   </head>
   <body>
     <div class="playground">
-      <canvas id="canvas" width="1600" height="800"></canvas>
+      <canvas id="canvas" width="1600" height="1200"></canvas>
     </div>
-    <button id="btnStart">开始</button>
-    <button id="btnStop">停止</button>
+    <div class="btns">
+      <button id="btnStart">开始</button>
+      <button id="btnStop">停止</button>
+    </div>
     <script src="./dist/app.bundle.js"></script>
   </body>
 </html>

@@ -1,33 +1,35 @@
 import { Canvas2DApplication } from './engine/Application'
 import { CanvasMouseEvent, CanvasKeyBoardEvent } from './engine/shared/event'
+import { strokeGrid, strokeCoord, fillCircle, fillText } from './utils/draw';
 
 class PlayGround extends Canvas2DApplication {
   constructor(canvas: HTMLCanvasElement) {
     super(canvas)
   }
   protected render(): void {
-    this.drawText('' + this._appId)
+    this.drawBackground()
+    this.drawText('Canvas Render Engine')
   }
 
   protected drawText(text: string): void {
     if (this.context2D !== null) {
-      let c = this.context2D;
-      c.clearRect(0, 0, c.canvas.width, c.canvas.height)
-      c.save()
-
-      c.textBaseline = "middle"
-      c.textAlign = "center"
+      let c = this.context2D
       // 计算cnavas中心坐标
       let centerX: number = c.canvas.width * 0.5
       let centerY: number = c.canvas.height * 0.5
 
-      c.font = "normal 100px Arial"
-      c.fillStyle = "pink"
-      c.strokeStyle = "yellow"
-      c.fillText(text, centerX, centerY)
-      c.strokeText(text, centerX, centerY)
+      fillText(c, text, centerX, centerY, '#ff9bcc', 'center', 'middle', '140px sans-serif')
+    }
+  }
 
-      c.restore()
+  // 画背景
+  protected drawBackground(): void {
+    let c = this.context2D
+    if (c !== null) {
+      c.clearRect(0, 0, c.canvas.width, c.canvas.height)
+      fillCircle(c, 0, 0, 5, 'green')
+      strokeGrid(c, '#333', 15)
+      strokeCoord(c, 0, 0, c.canvas.width, c.canvas.height)
     }
   }
 
@@ -59,6 +61,9 @@ const init = function (): void {
     playground.addTimer((id, data) => {
       console.log(data)
     }, 3, false, {a: 1})
+
+    // 直接开始运行
+    playground.start()
   }
 
   startBtn.onclick = function (): void {
