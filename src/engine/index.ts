@@ -346,28 +346,3 @@ export class Application implements EventListenerObject {
   }
 }
 
-export class Canvas2DApplication extends Application {
-  protected context2D: CanvasRenderingContext2D | null
-
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas)
-    this.context2D = this.canvas.getContext('2d')
-  }
-}
-
-export class WebGLApplication extends Application {
-  protected context3D: WebGLRenderingContext | null
-
-  constructor(canvas: HTMLCanvasElement, contextAttributes?: WebGLContextAttributes) {
-    super(canvas)
-    this.context3D = this.canvas.getContext('webgl', contextAttributes)
-
-    // 检查webGL兼容性
-    if (this.context3D === null) {
-      this.context3D = this.canvas.getContext('experimental-webgl', contextAttributes)
-      if (this.context3D === null) {
-        throw Error('无法创建WebGLRenderingContext上下文对象')
-      }
-    }
-  }
-}

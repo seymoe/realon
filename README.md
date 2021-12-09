@@ -1,8 +1,6 @@
-# Canvas-2D
+# Realon (雷隆)
 
-# What is this?
-
-This is a small sample repository that uses TypeScript to build a Canvas 2D render application.
+A simple render engine based on canvas.
 
 # How do I use it?
 

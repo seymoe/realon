@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Canvas Application</title>
+    <title>Realon</title>
     <style>
       * {
         margin: 0;
@@ -17,12 +17,12 @@
       }
       .playground {
         background-color: #ffff;
-        width: 800px;
-        height: 600px;
+        width: 375px;
+        height: 667px;
       }
       #canvas {
-        width: 800px;
-        height: 600px;
+        width: 375px;
+        height: 667px;
       }
       .btns{
         margin-left: 15px;
@@ -30,7 +30,7 @@
       button{
         margin-bottom: 10px;
         display: block;
-        width: 60px;
+        width: 100px;
         height: 30px;
         line-height: 30px;
       }
@@ -38,12 +38,41 @@
   </head>
   <body>
     <div class="playground">
-      <canvas id="canvas" width="1600" height="1200"></canvas>
+      <canvas id="canvas" width="750" height="1334"></canvas>
     </div>
     <div class="btns">
-      <button id="btnStart">开始</button>
-      <button id="btnStop">停止</button>
+      <button id="btnStart">切换场景</button>
     </div>
-    <script src="./dist/app.bundle.js"></script>
+    <script src="./dist/realon.js"></script>
+    <script>
+      window.onload = function () {
+        const { Stage, Scene, Text } = Realon
+        const stage = new Stage(document.getElementById('canvas'), 'canvas', {
+          grid: { enable: true, gutter: 5 }
+        })
+        // 启动场景
+        const startScene = new Scene('StartScene', stage)
+        startScene.addChild(new Text('Realon (雷隆)', {
+          font: '60px sans-serif',
+          x: 100,
+          y: 100
+        }))
+        // 运行场景
+        const runtimeScene = new Scene('RuntimeScene', stage)
+        runtimeScene.addChild(new Text('https://github.com/seymoe/realon', {
+          font: '36px sans-serif',
+          color: 'red',
+          x: 40,
+          y: 100
+        }))
+        stage.addScene(startScene)
+        stage.addScene(runtimeScene)
+        let sceneId = 'StartScene'
+        document.getElementById('btnStart').onclick = function () {
+          sceneId = sceneId === 'StartScene' ? 'RuntimeScene' : 'StartScene'
+          stage.changeScene(sceneId)
+        }
+      }
+    </script>
   </body>
 </html>
